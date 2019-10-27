@@ -37,9 +37,11 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.raywenderlich.android.creaturemon.R
+import com.raywenderlich.android.creaturemon.databinding.ActivityCreatureBinding
 import com.raywenderlich.android.creaturemon.model.AttributeStore
 import com.raywenderlich.android.creaturemon.model.AttributeType
 import com.raywenderlich.android.creaturemon.model.AttributeValue
@@ -48,21 +50,24 @@ import com.raywenderlich.android.creaturemon.view.avatars.AvatarAdapter
 import com.raywenderlich.android.creaturemon.view.avatars.AvatarBottomDialogFragment
 import com.raywenderlich.android.creaturemon.viewmodel.CreatureViewModel
 import kotlinx.android.synthetic.main.activity_creature.*
+import org.jetbrains.anko.toast
 
 
 class CreatureActivity : AppCompatActivity(), AvatarAdapter.AvatarListener {
 
     private lateinit var creatureViewModel: CreatureViewModel
 
+    lateinit var binding: ActivityCreatureBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_creature)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_creature)
         creatureViewModel = ViewModelProviders.of(this).get(CreatureViewModel::class.java)
+        binding.viewmodel = creatureViewModel
 
         configureUI()
         configureSpinnerAdapters()
         configureSpinnerListeners()
-        configureEditText()
         configureClickListeners()
         configureLiveDataObservers()
     }
@@ -108,26 +113,10 @@ class CreatureActivity : AppCompatActivity(), AvatarAdapter.AvatarListener {
         }
     }
 
-    private fun configureEditText() {
-        nameEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                creatureViewModel.name = s.toString()
-            }
-        })
-    }
-
     private fun configureClickListeners() {
         avatarImageView.setOnClickListener {
             val bottomDialogFragment = AvatarBottomDialogFragment.newInstance()
             bottomDialogFragment.show(supportFragmentManager, "AvatarBottomDialogFragment")
-        }
-
-        saveButton.setOnClickListener {
-            if (creatureViewModel.saveCreature()) {
-                finish()
-            }
         }
     }
 
@@ -136,6 +125,14 @@ class CreatureActivity : AppCompatActivity(), AvatarAdapter.AvatarListener {
             hitPoints.text = it.hitPoints.toString()
             avatarImageView.setImageResource(it.drawable)
             nameEditText.setText(it.name)
+        })
+        creatureViewModel.saveCreatureLiveData.observe(this, Observer { saved ->
+            if (saved) {
+                toast("Creature saved!")
+                finish()
+            } else {
+                toast("Please fill missing fields")
+            }
         })
     }
 

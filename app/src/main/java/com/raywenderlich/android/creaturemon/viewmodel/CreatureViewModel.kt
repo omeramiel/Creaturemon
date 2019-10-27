@@ -1,5 +1,7 @@
 package com.raywenderlich.android.creaturemon.viewmodel
 
+import androidx.annotation.VisibleForTesting
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,20 +12,21 @@ class CreatureViewModel(private val creatureGenerator: CreatureGenerator = Creat
                         private val creatureRepository: CreatureRepository = RoomRepository()) : ViewModel() {
 
     private val _creatureLiveData = MutableLiveData<Creature>()
-
     val creatureLiveData: LiveData<Creature> = _creatureLiveData
 
-    var name = ""
+    private val _saveCreatureLiveData = MutableLiveData<Boolean>()
+    val saveCreatureLiveData: LiveData<Boolean> = _saveCreatureLiveData
+
+    var name = ObservableField<String>("")
+    var drawable = 0
     var intelligence = 0
     var strength = 0
     var endurance = 0
-    var drawable = 0
-
     lateinit var creature: Creature
 
     fun updateCreature() {
         val attributes = CreatureAttributes(intelligence, strength, endurance)
-        creature = creatureGenerator.generateCreature(name = name, drawable = drawable, attributes = attributes)
+        creature = creatureGenerator.generateCreature(name = name.get().orEmpty(), drawable = drawable, attributes = attributes)
         _creatureLiveData.postValue(creature)
     }
 
@@ -41,15 +44,17 @@ class CreatureViewModel(private val creatureGenerator: CreatureGenerator = Creat
         updateCreature()
     }
 
-    fun saveCreature(): Boolean =
+    fun saveCreature() =
             if (canSaveCreature()) {
+                updateCreature()
                 creatureRepository.saveCreature(creature)
-                true
+                _saveCreatureLiveData.postValue(true)
             } else {
-                false
+                _saveCreatureLiveData.postValue(false)
             }
 
     fun canSaveCreature(): Boolean {
+        val name = name.get().orEmpty()
         return name.isNotBlank() && drawable != 0 && intelligence != 0 && strength != 0 && endurance != 0
     }
 
