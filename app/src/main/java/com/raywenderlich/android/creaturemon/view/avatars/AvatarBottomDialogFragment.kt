@@ -31,11 +31,11 @@
 package com.raywenderlich.android.creaturemon.view.avatars
 
 import android.os.Bundle
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import androidx.recyclerview.widget.GridLayoutManager
-import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.raywenderlich.android.creaturemon.R
 import com.raywenderlich.android.creaturemon.model.Avatar
 import kotlinx.android.synthetic.main.layout_avatar_bottom_sheet.*

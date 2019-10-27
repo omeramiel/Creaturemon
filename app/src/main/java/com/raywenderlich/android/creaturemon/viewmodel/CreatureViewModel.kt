@@ -1,12 +1,13 @@
 package com.raywenderlich.android.creaturemon.viewmodel
 
-import androidx.annotation.VisibleForTesting
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.creaturemon.model.*
 import com.raywenderlich.android.creaturemon.model.room.RoomRepository
+import kotlinx.coroutines.launch
 
 class CreatureViewModel(private val creatureGenerator: CreatureGenerator = CreatureGenerator(),
                         private val creatureRepository: CreatureRepository = RoomRepository()) : ViewModel() {
@@ -44,14 +45,18 @@ class CreatureViewModel(private val creatureGenerator: CreatureGenerator = Creat
         updateCreature()
     }
 
-    fun saveCreature() =
-            if (canSaveCreature()) {
-                updateCreature()
+    fun saveCreature() {
+        if (canSaveCreature()) {
+            updateCreature()
+            viewModelScope.launch {
                 creatureRepository.saveCreature(creature)
+            }.invokeOnCompletion {
                 _saveCreatureLiveData.postValue(true)
-            } else {
-                _saveCreatureLiveData.postValue(false)
             }
+        } else {
+            _saveCreatureLiveData.postValue(false)
+        }
+    }
 
     fun canSaveCreature(): Boolean {
         val name = name.get().orEmpty()

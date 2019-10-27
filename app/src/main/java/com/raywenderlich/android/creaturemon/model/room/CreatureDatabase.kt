@@ -32,7 +32,6 @@ package com.raywenderlich.android.creaturemon.model.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.raywenderlich.android.creaturemon.model.Creature
 

@@ -31,9 +31,7 @@
 package com.raywenderlich.android.creaturemon.app
 
 import android.app.Application
-import androidx.room.DatabaseConfiguration
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.raywenderlich.android.creaturemon.model.room.CreatureDatabase
 
 class CreaturemonApplication : Application() {

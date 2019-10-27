@@ -30,9 +30,9 @@
 
 package com.raywenderlich.android.creaturemon.model
 
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.annotation.NonNull
 
 @Entity(tableName = "creature_table")
 data class Creature(

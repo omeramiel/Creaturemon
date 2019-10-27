@@ -5,18 +5,14 @@ import com.raywenderlich.android.creaturemon.model.Creature
 import com.raywenderlich.android.creaturemon.model.CreatureAttributes
 import com.raywenderlich.android.creaturemon.model.CreatureGenerator
 import com.raywenderlich.android.creaturemon.model.CreatureRepository
-import junit.framework.TestResult
-import org.junit.Assert
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import org.mockito.MockitoFramework
 
 class CreatureViewModelTest {
 

@@ -38,7 +38,7 @@ import com.raywenderlich.android.creaturemon.model.Creature
 interface CreatureDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(creature: Creature)
+    suspend fun insert(creature: Creature)
 
     @Delete
     fun clearAll(vararg creature: Creature)

@@ -31,12 +31,10 @@
 package com.raywenderlich.android.creaturemon.view.creature
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -124,7 +122,6 @@ class CreatureActivity : AppCompatActivity(), AvatarAdapter.AvatarListener {
         creatureViewModel.creatureLiveData.observe(this, Observer {
             hitPoints.text = it.hitPoints.toString()
             avatarImageView.setImageResource(it.drawable)
-            nameEditText.setText(it.name)
         })
         creatureViewModel.saveCreatureLiveData.observe(this, Observer { saved ->
             if (saved) {
