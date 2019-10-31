@@ -50,7 +50,7 @@ class RoomRepository : CreatureRepository {
     override suspend fun clearAllCreatures() {
         val creatureArray = allCreatures.value?.toTypedArray()
         creatureArray?.let {
-            creatureDao.clearAll(*creatureArray)
+            creatureDao.delete(*creatureArray)
         }
     }
 }

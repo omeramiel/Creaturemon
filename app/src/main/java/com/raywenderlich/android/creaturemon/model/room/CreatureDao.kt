@@ -41,7 +41,7 @@ interface CreatureDao {
     suspend fun insert(creature: Creature)
 
     @Delete
-    fun clearAll(vararg creature: Creature)
+    fun delete(vararg creature: Creature)
 
     @Query("SELECT * FROM creature_table ORDER BY name ASC")
     fun getAll(): LiveData<List<Creature>>
