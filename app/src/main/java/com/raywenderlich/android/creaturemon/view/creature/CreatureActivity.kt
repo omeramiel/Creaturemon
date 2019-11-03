@@ -37,7 +37,6 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.raywenderlich.android.creaturemon.R
 import com.raywenderlich.android.creaturemon.databinding.ActivityCreatureBinding
 import com.raywenderlich.android.creaturemon.model.AttributeStore
@@ -49,18 +48,18 @@ import com.raywenderlich.android.creaturemon.view.avatars.AvatarBottomDialogFrag
 import com.raywenderlich.android.creaturemon.viewmodel.CreatureViewModel
 import kotlinx.android.synthetic.main.activity_creature.*
 import org.jetbrains.anko.toast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CreatureActivity : AppCompatActivity(), AvatarAdapter.AvatarListener {
 
-    private lateinit var creatureViewModel: CreatureViewModel
+    private val creatureViewModel: CreatureViewModel by viewModel()
 
     lateinit var binding: ActivityCreatureBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_creature)
-        creatureViewModel = ViewModelProviders.of(this).get(CreatureViewModel::class.java)
         binding.viewmodel = creatureViewModel
 
         configureUI()

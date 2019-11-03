@@ -31,17 +31,17 @@
 package com.raywenderlich.android.creaturemon.app
 
 import android.app.Application
-import androidx.room.Room
-import com.raywenderlich.android.creaturemon.model.room.CreatureDatabase
+import com.raywenderlich.android.creaturemon.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class CreaturemonApplication : Application() {
 
-  companion object {
-    lateinit var database: CreatureDatabase
-  }
-
-  override fun onCreate() {
-    super.onCreate()
-    database = Room.databaseBuilder(this, CreatureDatabase::class.java, "creature_database").build()
-  }
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@CreaturemonApplication)
+            modules(appModule)
+        }
+    }
 }

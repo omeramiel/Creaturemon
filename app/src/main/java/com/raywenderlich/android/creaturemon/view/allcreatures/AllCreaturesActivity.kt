@@ -6,26 +6,24 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raywenderlich.android.creaturemon.R
 import com.raywenderlich.android.creaturemon.view.creature.CreatureActivity
 import com.raywenderlich.android.creaturemon.viewmodel.AllCreaturesViewModel
 import kotlinx.android.synthetic.main.activity_all_creatures.*
 import kotlinx.android.synthetic.main.content_all_creatures.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AllCreaturesActivity : AppCompatActivity() {
 
     private val adapter = CreatureAdapter(mutableListOf())
 
-    private lateinit var allCreaturesViewModel: AllCreaturesViewModel
+    private val allCreaturesViewModel: AllCreaturesViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_creatures)
         setSupportActionBar(toolbar)
-
-        allCreaturesViewModel = ViewModelProviders.of(this).get(AllCreaturesViewModel::class.java)
 
         allCreaturesViewModel.creaturesLiveData.observe(this, Observer { creatures ->
             adapter.updateCreatures(creatures)

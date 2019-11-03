@@ -7,11 +7,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion 28
+  compileSdkVersion 29
   defaultConfig {
     applicationId "com.raywenderlich.android.creaturemon"
     minSdkVersion 21
-    targetSdkVersion 28
+    targetSdkVersion 29
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -51,8 +51,12 @@ dependencies {
   // Anko
   implementation "org.jetbrains.anko:anko-commons:0.10.8"
 
+  // Koin
+//  implementation "org.koin:koin-android:$koin_version"
+  implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
   testImplementation 'junit:junit:4.12'
-  testImplementation 'org.mockito:mockito-core:2.23.0'
+  testImplementation 'org.mockito:mockito-core:2.25.0'
   testImplementation "android.arch.core:core-testing:$arch_comp_version"
   androidTestImplementation 'androidx.test.ext:junit:1.1.1'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

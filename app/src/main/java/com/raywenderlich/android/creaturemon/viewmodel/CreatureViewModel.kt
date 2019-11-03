@@ -6,11 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.creaturemon.model.*
-import com.raywenderlich.android.creaturemon.model.room.RoomRepository
 import kotlinx.coroutines.launch
 
-class CreatureViewModel(private val creatureGenerator: CreatureGenerator = CreatureGenerator(),
-                        private val creatureRepository: CreatureRepository = RoomRepository()) : ViewModel() {
+class CreatureViewModel(private val creatureGenerator: CreatureGenerator,
+                        private val creatureRepository: CreatureRepository) : ViewModel() {
 
     private val _creatureLiveData = MutableLiveData<Creature>()
     val creatureLiveData: LiveData<Creature> = _creatureLiveData

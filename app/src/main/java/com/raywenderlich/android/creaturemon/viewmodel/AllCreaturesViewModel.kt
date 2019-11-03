@@ -5,12 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raywenderlich.android.creaturemon.model.Creature
 import com.raywenderlich.android.creaturemon.model.CreatureRepository
-import com.raywenderlich.android.creaturemon.model.room.RoomRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AllCreaturesViewModel(private val creatureRepository: CreatureRepository = RoomRepository()) : ViewModel() {
+class AllCreaturesViewModel(private val creatureRepository: CreatureRepository) : ViewModel() {
 
     private val _creaturesLiveData = creatureRepository.getAllCreatures()
 

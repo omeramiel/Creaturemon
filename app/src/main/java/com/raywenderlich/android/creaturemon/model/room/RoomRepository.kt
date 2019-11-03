@@ -35,9 +35,9 @@ import com.raywenderlich.android.creaturemon.app.CreaturemonApplication
 import com.raywenderlich.android.creaturemon.model.Creature
 import com.raywenderlich.android.creaturemon.model.CreatureRepository
 
-class RoomRepository : CreatureRepository {
+class RoomRepository(database: CreatureDatabase) : CreatureRepository {
 
-    private val creatureDao: CreatureDao = CreaturemonApplication.database.creatureDao()
+    private val creatureDao: CreatureDao = database.creatureDao()
 
     private val allCreatures = creatureDao.getAll()
 
